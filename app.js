@@ -236,16 +236,54 @@
     });
   }
 
+  // --- Security: Safe HTML Escaping (XSS Prevention) ---
+  function escapeHtml(str) {
+    if (typeof str !== 'string') return '';
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
   function renderSuccessCard(guestName, guestCount, isAttending) {
+    const safeName = escapeHtml(guestName);
+    const safeCount = Number(guestCount) || 1;
     const messageText = isAttending === 'yes'
-      ? 'Thank you, ' + guestName + "! We can't wait to celebrate with you and your party of " + guestCount + '.'
-      : 'Thank you, ' + guestName + '. You will be missed, and we appreciate your prayers.';
+      ? 'Thank you, ' + safeName + "! We can't wait to celebrate with you and your party of " + safeCount + '.'
+      : 'Thank you, ' + safeName + '. You will be missed, and we appreciate your prayers.';
 
     rsvpWrap.innerHTML =
       '<div class="card" style="max-width:460px;margin:24px auto 0">' +
       '<h3>Thank you!</h3>' +
       '<p style="margin-top:10px;font-size:17px;line-height:1.6">' + messageText + '</p>' +
       '</div>';
+  }
+
+  // --- Personalized Guest Greeting (?to=Name or ?guest=Name) ---
+  try {
+    const urlParams = new URLSearchParams(window.location.search);
+    const guestParam = urlParams.get('to') || urlParams.get('guest') || urlParams.get('for') || urlParams.get('name');
+    if (guestParam && guestParam.trim().length > 0) {
+      const cleanGuest = guestParam.trim();
+      const curGuest = document.getElementById('cur-guest');
+      const heroGuest = document.getElementById('hero-guest');
+
+      if (curGuest) {
+        curGuest.textContent = 'Dear ' + cleanGuest + ',';
+        curGuest.style.display = 'block';
+      }
+      if (heroGuest) {
+        heroGuest.textContent = 'Warmly Welcoming ' + cleanGuest;
+        heroGuest.style.display = 'block';
+      }
+      if (rsvpName && !rsvpName.value) {
+        rsvpName.value = cleanGuest;
+      }
+    }
+  } catch (paramErr) {
+    console.warn('Could not parse guest parameter:', paramErr);
   }
 
   // Display helpful indicator based on configuration
