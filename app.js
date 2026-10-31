@@ -198,6 +198,8 @@
   // Paste your Google Apps Script Web App URL here after deploying:
   // e.g., 'https://script.google.com/macros/s/AKfycb.../exec'
   const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbyG8LFXEmY-64Z0olVcPA9Ei9pnL9DU8irtofBoXWu7gyV-Tf6ZwZTxqyGgBjQgjDUDKA/exec';
+  const AUTH_TOKEN = 'matty-christening-2026';
+  const PAGE_LOAD_TIME = Date.now();
 
   const rsvpForm = document.getElementById('rsvp-form');
   const rsvpWrap = document.getElementById('rsvp-wrap');
@@ -207,6 +209,44 @@
   const rsvpErr = document.getElementById('rsvp-err');
   const rsvpBtn = document.getElementById('rsvp-btn');
   const rsvpNote = document.getElementById('rsvp-note');
+  const rsvpHp = document.getElementById('rsvp-hp');
+  const captchaQuestion = document.getElementById('captcha-question');
+  const captchaAns = document.getElementById('captcha-ans');
+  const captchaRefresh = document.getElementById('captcha-refresh');
+
+  // --- Dynamic Security Challenge Generator ---
+  let captchaSolution = 0;
+  function generateCaptcha() {
+    const numA = Math.floor(Math.random() * 8) + 2;
+    const numB = Math.floor(Math.random() * 7) + 1;
+    captchaSolution = numA + numB;
+    if (captchaQuestion) {
+      captchaQuestion.textContent = numA + ' + ' + numB + ' = ?';
+    }
+    if (captchaAns) {
+      captchaAns.value = '';
+    }
+  }
+
+  generateCaptcha();
+
+  if (captchaRefresh) {
+    captchaRefresh.addEventListener('click', function () {
+      generateCaptcha();
+    });
+  }
+
+  function renderSuccessCard(guestName, guestCount, isAttending) {
+    const messageText = isAttending === 'yes'
+      ? 'Thank you, ' + guestName + "! We can't wait to celebrate with you and your party of " + guestCount + '.'
+      : 'Thank you, ' + guestName + '. You will be missed, and we appreciate your prayers.';
+
+    rsvpWrap.innerHTML =
+      '<div class="card" style="max-width:460px;margin:24px auto 0">' +
+      '<h3>Thank you!</h3>' +
+      '<p style="margin-top:10px;font-size:17px;line-height:1.6">' + messageText + '</p>' +
+      '</div>';
+  }
 
   // Display helpful indicator based on configuration
   if (rsvpNote) {
@@ -227,14 +267,70 @@
       const attending = attRadio ? attRadio.value : 'yes';
       const message = rsvpMsg ? rsvpMsg.value.trim() : '';
 
+      // --- Bot Defense 1: Honeypot check (hidden input that only bots fill) ---
+      if (rsvpHp && rsvpHp.value.trim().length > 0) {
+        console.warn('Bot detected via honeypot trap.');
+        rsvpBtn.disabled = true;
+        rsvpBtn.textContent = 'Sending…';
+        setTimeout(function () {
+          renderSuccessCard(name, count, attending);
+        }, 800);
+        return;
+      }
+
+      // --- Bot Defense 2: Submission Timing Check ---
+      const elapsedSeconds = (Date.now() - PAGE_LOAD_TIME) / 1000;
+      if (elapsedSeconds < 2.0) {
+        console.warn('Bot detected via rapid submission timing (' + elapsedSeconds.toFixed(2) + 's).');
+        rsvpBtn.disabled = true;
+        rsvpBtn.textContent = 'Sending…';
+        setTimeout(function () {
+          renderSuccessCard(name, count, attending);
+        }, 800);
+        return;
+      }
+
+      // --- Bot Defense 3: Security Challenge CAPTCHA Validation ---
+      const enteredCaptcha = captchaAns ? Number(captchaAns.value.trim()) : NaN;
+      if (isNaN(enteredCaptcha) || enteredCaptcha !== captchaSolution) {
+        rsvpErr.textContent = 'Incorrect verification answer. Please solve the security check.';
+        generateCaptcha();
+        if (captchaAns) {
+          captchaAns.focus();
+        }
+        return;
+      }
+
+      // --- Input Validation ---
       if (name.length < 2) {
         rsvpErr.textContent = 'Please enter your full name.';
+        return;
+      }
+
+      // --- Bot Defense 3: Reject web links in name ---
+      if (/https?:\/\/|www\./i.test(name)) {
+        rsvpErr.textContent = 'Please enter a valid name without web links.';
         return;
       }
 
       if (!count || count < 1 || count > 10) {
         rsvpErr.textContent = 'Attendees must be between 1 and 10.';
         return;
+      }
+
+      // --- Bot Defense 4: Client Rate Limiting (max 4 per session) ---
+      try {
+        const history = JSON.parse(sessionStorage.getItem('rsvp_attempts') || '[]');
+        const now = Date.now();
+        const recent = history.filter(function (t) { return now - t < 300000; });
+        if (recent.length >= 4) {
+          rsvpErr.textContent = 'Too many submissions. Please wait a few minutes before trying again.';
+          return;
+        }
+        recent.push(now);
+        sessionStorage.setItem('rsvp_attempts', JSON.stringify(recent));
+      } catch (storageErr) {
+        // Fallback gracefully if sessionStorage is disabled
       }
 
       rsvpErr.textContent = '';
@@ -244,6 +340,7 @@
       // Send to Google Sheets if configured
       if (GOOGLE_SHEET_URL && GOOGLE_SHEET_URL.trim().length > 0) {
         const payload = {
+          token: AUTH_TOKEN,
           name: name,
           attendees: count,
           attending: attending,
@@ -275,15 +372,7 @@
       }
 
       setTimeout(function () {
-        const messageText = attending === 'yes'
-          ? 'Thank you, ' + name + "! We can't wait to celebrate with you and your party of " + count + '.'
-          : 'Thank you, ' + name + '. You will be missed, and we appreciate your prayers.';
-
-        rsvpWrap.innerHTML =
-          '<div class="card" style="max-width:460px;margin:24px auto 0">' +
-          '<h3>Thank you!</h3>' +
-          '<p style="margin-top:10px;font-size:17px;line-height:1.6">' + messageText + '</p>' +
-          '</div>';
+        renderSuccessCard(name, count, attending);
       }, 900);
     });
   }
