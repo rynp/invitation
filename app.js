@@ -194,13 +194,28 @@
   updateCountdown();
   setInterval(updateCountdown, 1000);
 
-  // --- RSVP Form Handler ---
+  // --- RSVP Configuration & Form Handler ---
+  // Paste your Google Apps Script Web App URL here after deploying:
+  // e.g., 'https://script.google.com/macros/s/AKfycb.../exec'
+  const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbyG8LFXEmY-64Z0olVcPA9Ei9pnL9DU8irtofBoXWu7gyV-Tf6ZwZTxqyGgBjQgjDUDKA/exec';
+
   const rsvpForm = document.getElementById('rsvp-form');
   const rsvpWrap = document.getElementById('rsvp-wrap');
   const rsvpName = document.getElementById('rsvp-name');
   const rsvpCount = document.getElementById('rsvp-count');
+  const rsvpMsg = document.getElementById('rsvp-msg');
   const rsvpErr = document.getElementById('rsvp-err');
   const rsvpBtn = document.getElementById('rsvp-btn');
+  const rsvpNote = document.getElementById('rsvp-note');
+
+  // Display helpful indicator based on configuration
+  if (rsvpNote) {
+    if (GOOGLE_SHEET_URL && GOOGLE_SHEET_URL.trim().length > 0) {
+      rsvpNote.textContent = 'Responses are recorded directly for our family.';
+    } else {
+      rsvpNote.textContent = 'Preview mode — paste your Google Apps Script URL in app.js to record responses.';
+    }
+  }
 
   if (rsvpForm && rsvpWrap) {
     rsvpForm.addEventListener('submit', function (e) {
@@ -210,6 +225,7 @@
       const count = Number(rsvpCount.value);
       const attRadio = document.querySelector('input[name="att"]:checked');
       const attending = attRadio ? attRadio.value : 'yes';
+      const message = rsvpMsg ? rsvpMsg.value.trim() : '';
 
       if (name.length < 2) {
         rsvpErr.textContent = 'Please enter your full name.';
@@ -224,6 +240,39 @@
       rsvpErr.textContent = '';
       rsvpBtn.disabled = true;
       rsvpBtn.textContent = 'Sending…';
+
+      // Send to Google Sheets if configured
+      if (GOOGLE_SHEET_URL && GOOGLE_SHEET_URL.trim().length > 0) {
+        const payload = {
+          name: name,
+          attendees: count,
+          attending: attending,
+          message: message,
+          submittedAt: new Date().toISOString()
+        };
+
+        try {
+          fetch(GOOGLE_SHEET_URL.trim(), {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+              'Content-Type': 'text/plain;charset=utf-8'
+            },
+            body: JSON.stringify(payload)
+          }).catch(function (fetchErr) {
+            console.warn('Google Sheet fetch error:', fetchErr);
+          });
+        } catch (postErr) {
+          console.warn('Failed to dispatch RSVP to Google Sheet:', postErr);
+        }
+      } else {
+        console.info('RSVP submitted in preview mode (no Google Sheet URL configured):', {
+          name: name,
+          attendees: count,
+          attending: attending,
+          message: message
+        });
+      }
 
       setTimeout(function () {
         const messageText = attending === 'yes'
