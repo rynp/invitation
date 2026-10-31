@@ -1,0 +1,18 @@
+{
+  "name": "invitation",
+  "version": "1.0.0",
+  "description": "The Christening of Alford Matthias “Matty” Sevilla - Digital Invitation",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx -y serve . -l 3000",
+    "dev": "npx -y serve . -l 3000"
+  },
+  "keywords": [
+    "invitation",
+    "christening",
+    "website",
+    "github-pages"
+  ],
+  "author": "Ryan Paglinawan",
+  "license": "MIT"
+}

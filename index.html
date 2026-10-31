@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#FAF7F2" />
+  <title>The Christening of Alford Matthias “Matty” Sevilla</title>
+  <meta name="description" content="You are warmly invited to the christening of Matty. Join us to celebrate this beautiful milestone." />
+
+  <!-- Open Graph / Social Sharing -->
+  <meta property="og:title" content="The Christening of Alford Matthias “Matty” Sevilla" />
+  <meta property="og:description" content="You are warmly invited to the christening of Matty. Join us to celebrate this beautiful milestone." />
+  <meta property="og:image" content="https://rynp.github.io/invitation/images/matty-1.jpg" />
+  <meta property="og:image:width" content="900" />
+  <meta property="og:image:height" content="1200" />
+  <meta property="og:image:alt" content="Portrait of Matty" />
+  <meta property="og:type" content="website" />
+
+  <!-- Twitter Meta -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="The Christening of Alford Matthias “Matty” Sevilla" />
+  <meta name="twitter:description" content="You are warmly invited to the christening of Matty. Join us to celebrate this beautiful milestone." />
+  <meta name="twitter:image" content="https://rynp.github.io/invitation/images/matty-1.jpg" />
+
+  <!-- Favicon & Touch Icon -->
+  <link rel="icon" href="./icon.svg" type="image/svg+xml" sizes="any" />
+  <link rel="apple-touch-icon" href="./images/matty-1.jpg" />
+
+  <!-- Google Fonts Preconnect & Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <!-- Preload Hero Image -->
+  <link rel="preload" as="image" href="./images/matty-1.jpg" />
+
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body class="lock">
+
+  <!-- Curtain Dialog Overlay -->
+  <div id="cur" role="dialog" aria-label="Open the invitation">
+    <div class="cp l"></div>
+    <div class="cp r"></div>
+    <div class="cs">
+      <div class="eyebrow">You are invited</div>
+      <div class="cn">Matty</div>
+      <div class="of" style="margin:0 0 4px;font-size:22px;font-style:italic">Alford Matthias Sevilla</div>
+      <div class="of">Christening</div>
+      <button id="co" class="btn" type="button">Open Invitation</button>
+      <button id="cq" class="lnk" type="button">Open without music</button>
+    </div>
+  </div>
+
+  <!-- Top-Right Floating Music Toggle Button -->
+  <button id="mu" type="button" aria-label="Play or pause music" aria-pressed="false" hidden>♪</button>
+
+  <!-- Hero Header -->
+  <header class="hero">
+    <span class="st" style="top:9%;left:12%">✦</span>
+    <span class="st" style="top:18%;right:14%;animation-delay:1s">✧</span>
+    <span class="st" style="top:62%;left:8%;animation-delay:2s">✧</span>
+    <span class="st" style="top:74%;right:10%;animation-delay:.6s">✦</span>
+    <div class="ring">
+      <img src="./images/matty-1.jpg" alt="Portrait of Matty with hair in two little buns" />
+    </div>
+    <div class="eyebrow">A Special Day to Celebrate</div>
+    <div class="of">The Christening of</div>
+    <h1 id="name">Matty</h1>
+    <div class="of" style="font-style:italic;letter-spacing:.04em;margin-top:-6px">Alford Matthias Sevilla</div>
+    <p style="max-width:440px;margin:14px 24px 26px">Join us as we welcome our little blessing into the faith, with grateful hearts and endless love.</p>
+    <p id="preview" style="margin:0 0 26px">August 19, 2026 · St. Matthew Parish Church</p>
+    <a class="btn" href="#details">View Invitation</a>
+  </header>
+
+  <!-- With Grateful Hearts Section -->
+  <section class="fade">
+    <div class="eyebrow">With Grateful Hearts</div>
+    <h2>You Are Invited</h2>
+    <div class="orn">✦</div>
+    <p id="msg" style="max-width:560px;margin:auto;font-size:19px">With grateful hearts and endless love, we invite you to join us as we celebrate a beautiful milestone in our little one&#x27;s life. Your presence and prayers will make this special day even more meaningful.</p>
+    <div id="countdown-root"></div>
+  </section>
+
+  <!-- Baby's Portrait Gallery -->
+  <section class="fade band">
+    <div>
+      <div class="eyebrow">Our Little Blessing</div>
+      <h2>Baby&#x27;s Portrait</h2>
+      <div class="orn">✦</div>
+      <div class="pair" aria-label="Photos of Matty">
+        <div class="frame">
+          <img src="./images/matty-1.jpg" alt="Baby smiling softly in a white shirt and navy vest with a bow tie" loading="lazy" />
+        </div>
+        <div class="frame">
+          <img src="./images/matty-2.jpg" alt="Baby wearing a teddy bear cap and a teal shirt" loading="lazy" />
+        </div>
+        <div class="frame">
+          <img src="./images/matty-3.jpg" alt="Three-month-old baby with a full head of dark hair on a cream pillow" loading="lazy" />
+        </div>
+        <div class="frame">
+          <img src="./images/matty-4.jpg" alt="Baby smiling happily with two little hair buns" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Family Section -->
+  <section class="fade">
+    <div class="eyebrow">Our Family</div>
+    <h2>Three Hearts, One Love</h2>
+    <div class="orn">✦</div>
+    <div class="frame fam">
+      <img src="./images/family.jpg" alt="Parents holding their baby in a church aisle, all dressed in white" loading="lazy" />
+    </div>
+    <p style="margin-top:18px;font:italic 26px 'Cormorant Garamond',Georgia,serif">Mark &amp; Anna Sevilla</p>
+    <p class="ph" style="font-size:13px;margin:0">Sample names for preview</p>
+  </section>
+
+  <!-- Save the Date / Event Details -->
+  <section id="details" class="fade band">
+    <div>
+      <div class="eyebrow">Save the Date</div>
+      <h2>Event Details</h2>
+      <div class="orn">✦</div>
+      <div class="grid">
+        <div class="card">
+          <div class="l">Date</div>
+          <p style="font:400 24px 'Cormorant Garamond',Georgia,serif">Wednesday, August 19, 2026</p>
+        </div>
+        <div class="card">
+          <div class="l">Time</div>
+          <p style="font:400 24px 'Cormorant Garamond',Georgia,serif">10:00 AM</p>
+        </div>
+        <div class="card">
+          <div class="l">Church</div>
+          <p style="font:400 24px 'Cormorant Garamond',Georgia,serif">St. Matthew Parish Church<br/><small>Poblacion, Boac, Marinduque, Philippines</small></p>
+          <a class="btn o" target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps/search/?api=1&amp;query=Boac+Marinduque+Philippines+church">View Church Location</a>
+        </div>
+        <div class="card">
+          <div class="l">Reception</div>
+          <p style="font:400 24px 'Cormorant Garamond',Georgia,serif">Casa Marinduque Garden Pavilion<br/><small>Brgy. Sample, Boac, Marinduque, Philippines</small></p>
+          <a class="btn o" target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps/search/?api=1&amp;query=Boac+Marinduque+Philippines+garden+venue">View Reception Location</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Schedule Timeline -->
+  <section class="fade">
+    <div class="eyebrow">The Day</div>
+    <h2>Schedule</h2>
+    <div class="orn">✦</div>
+    <div class="tl">
+      <div>
+        <b>9:30 AM · Guest Arrival</b>
+        Warm welcome at the church
+      </div>
+      <div>
+        <b>10:00 AM · Holy Mass &amp; Christening</b>
+        St. Matthew Parish Church
+      </div>
+      <div>
+        <b>11:30 AM · Family Photos</b>
+        Church grounds
+      </div>
+      <div>
+        <b>12:30 PM · Lunch &amp; Celebration</b>
+        Casa Marinduque Garden Pavilion
+      </div>
+    </div>
+    <p class="ph" style="font-size:13px;margin-top:20px">Sample schedule for preview</p>
+  </section>
+
+  <!-- Godparents & Attire Swatches -->
+  <section class="fade">
+    <div class="eyebrow">Our Beloved</div>
+    <h2>Godparents</h2>
+    <div class="orn">✦</div>
+    <div class="grid" style="max-width:600px;margin:24px auto 0">
+      <div class="card">
+        <div class="l">Ninong</div>
+        <p style="font:400 24px 'Cormorant Garamond',Georgia,serif">Daniel Reyes</p>
+      </div>
+      <div class="card">
+        <div class="l">Ninang</div>
+        <p style="font:400 24px 'Cormorant Garamond',Georgia,serif">Sofia Mendoza</p>
+      </div>
+    </div>
+    <h3 style="margin-top:44px;font-size:30px">Attire: Soft Whites &amp; Neutrals</h3>
+    <div class="sw">
+      <i style="background:#FAF7F2" title="Ivory"></i>
+      <i style="background:#E8DDCE" title="Beige"></i>
+      <i style="background:#A8B5A0" title="Sage"></i>
+      <i style="background:#C5A46D" title="Gold"></i>
+    </div>
+    <p class="ph" style="font-size:13px">Sample details for preview</p>
+  </section>
+
+  <!-- RSVP Form Section -->
+  <section id="rsvp" class="fade band">
+    <div>
+      <div class="eyebrow">RSVP</div>
+      <h2>Will You Join Us?</h2>
+      <div class="orn">✦</div>
+      <div id="rsvp-wrap">
+        <form id="rsvp-form" novalidate style="max-width:460px;margin:24px auto 0;text-align:left;display:grid;gap:16px">
+          <label>
+            Full Name
+            <input id="rsvp-name" required autocomplete="name" value="" placeholder="" />
+          </label>
+          <label>
+            Number of Attendees
+            <input id="rsvp-count" type="number" min="1" max="10" required value="1" />
+          </label>
+          <fieldset style="border:0;padding:0;margin:0">
+            <legend style="padding:0">Will you attend?</legend>
+            <label class="rad">
+              <input type="radio" name="att" value="yes" checked /> Attending
+            </label>
+            <label class="rad">
+              <input type="radio" name="att" value="no" /> Unable to attend
+            </label>
+          </fieldset>
+          <label>
+            Message (optional)
+            <textarea id="rsvp-msg" rows="3"></textarea>
+          </label>
+          <p id="rsvp-err" role="alert" style="color:#8a3b2e;margin:0;font-size:14px"></p>
+          <button id="rsvp-btn" class="btn" type="submit">Send RSVP</button>
+          <p class="ph" style="font-size:13px;margin:0;text-align:center">Preview only — responses are not saved.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="fade">
+    <div class="orn">✦</div>
+    <p style="max-width:480px;margin:0 auto 14px">Thank you for being part of this beautiful milestone. Your love, prayers, and presence mean the world to our family.</p>
+    <h2 id="name2">Matty</h2>
+    <p style="margin:4px 0 14px;font:italic 24px 'Cormorant Garamond',Georgia,serif">Alford Matthias Sevilla</p>
+    <p class="eyebrow">We Hope to See You There!</p>
+  </footer>
+
+  <script src="./app.js"></script>
+</body>
+</html>
