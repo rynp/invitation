@@ -197,7 +197,7 @@
   // --- RSVP Configuration & Form Handler ---
   // Paste your Google Apps Script Web App URL here after deploying:
   // e.g., 'https://script.google.com/macros/s/AKfycb.../exec'
-  const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbyG8LFXEmY-64Z0olVcPA9Ei9pnL9DU8irtofBoXWu7gyV-Tf6ZwZTxqyGgBjQgjDUDKA/exec';
+  const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbx_rp4ZpWBrePS2SXN9kwlzlzHAIjInvk73uJWExLH4ojCBhL7FM2N3O2-DwT-OmvXptg/exec';
   const AUTH_TOKEN = 'matty-christening-2026';
   const PAGE_LOAD_TIME = Date.now();
 
