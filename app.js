@@ -158,7 +158,7 @@
 
   // --- Real-time Countdown Timer ---
   const countdownRoot = document.getElementById('countdown-root');
-  const targetDateStr = '2026-08-19T00:00:00+08:00';
+  const targetDateStr = '2026-12-12T00:00:00+09:45';
   const targetTime = new Date(targetDateStr).getTime();
 
   function updateCountdown() {
